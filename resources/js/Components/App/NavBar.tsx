@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import ResponsiveNavLink from "../Core/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { auth } = usePage().props; // get auth from inertia props
+  const { user } = auth; // get user from auth
 
   return (
     <div className="shadow-sm border-b border-gray-100 dark:border-gray-700 dark:bg-gray-800 sticky top-0 z-10 bg-base-100">
@@ -89,7 +91,7 @@ function NavBar() {
         {/* Right side icons */}
         <div className="navbar-end">
           {/* Cart dropdown */}
-          <div className="dropdown dropdown-end mr-2">
+          <div className="dropdown dropdown-end mr-5">
             <div
               tabIndex={0}
               role="button"
@@ -131,49 +133,71 @@ function NavBar() {
             </div>
           </div>
 
+          {/* user logged in */}
           {/* User profile dropdown */}
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img
-                  alt="User avatar"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
+          {user && (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-7 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <img
+                    alt="User avatar"
+                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  />
+                </div>
               </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <ResponsiveNavLink
+                    className="justify-between"
+                    href={route("profile.edit")}
+                  >
+                    Profile
+                  </ResponsiveNavLink>
+                </li>
+                <li>
+                  <ResponsiveNavLink className="justify-between" href="">
+                    Settings
+                  </ResponsiveNavLink>
+                </li>
+                <li>
+                  <ResponsiveNavLink
+                    method="post"
+                    href={route("logout")}
+                    as="button"
+                  >
+                    Log Out
+                  </ResponsiveNavLink>
+                </li>
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <ResponsiveNavLink
-                  className="justify-between"
-                  href={route("profile.edit")}
+          )}
+
+          {/* user not logged in */}
+          {!user && (
+            <>
+              <div className="flex gap-2">
+                <Link
+                  href={route("login")}
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-primary hover:text-white transition-colors"
                 >
-                  Profile
-                  <span className="badge badge-sm badge-primary">New</span>
-                </ResponsiveNavLink>
-              </li>
-              <li>
-                <ResponsiveNavLink className="justify-between" href="">
-                  Settings
-                </ResponsiveNavLink>
-              </li>
-              <li>
-                <ResponsiveNavLink
-                  method="post"
-                  href={route("logout")}
-                  as="button"
+                  Log in
+                </Link>
+                <Link
+                  href={route("register")}
+                  className="btn btn-primary btn-sm rounded-lg"
                 >
-                  Log Out
-                </ResponsiveNavLink>
-              </li>
-            </ul>
-          </div>
+                  Register
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
