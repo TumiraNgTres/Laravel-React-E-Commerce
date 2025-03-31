@@ -112,7 +112,7 @@ function NavBar() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item badge-primary">
+                <span className="badge badge-sm indicator-item bg-violet-800 text-white">
                   8
                 </span>
               </div>
@@ -142,7 +142,7 @@ function NavBar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-7 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <div className="w-7 rounded-full ring ring-violet-800 ring-offset-base-100 ring-offset-2">
                   <img
                     alt="User avatar"
                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
@@ -185,13 +185,13 @@ function NavBar() {
               <div className="flex gap-2">
                 <Link
                   href={route("login")}
-                  className="btn btn-ghost btn-sm rounded-lg hover:bg-primary hover:text-white transition-colors"
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-violet-800 hover:text-white transition-colors"
                 >
                   Log in
                 </Link>
                 <Link
                   href={route("register")}
-                  className="btn btn-primary btn-sm rounded-lg"
+                  className="btn btn-sm rounded-lg bg-violet-800 text-white hover:bg-violet-700 focus:bg-violet-700"
                 >
                   Register
                 </Link>
