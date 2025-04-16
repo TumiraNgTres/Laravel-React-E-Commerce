@@ -14,6 +14,7 @@ use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
@@ -54,9 +55,15 @@ class AdminPanelProvider extends PanelProvider
                 'auth', // only authenticated users can access admin panel. that also authenticated using laravel default login
                 sprintf('role:%s|%s', RolesEnum::Admin->value, RolesEnum::Vendor->value) // spatia roles based on access- only admin and vendors have access
             ]);
-        // filament admin login functionaloty that we dont need. we used laravel default one.
+        // filament admin login functionality that we dont need. we used laravel default one.
         // ->authMiddleware([
         //     Authenticate::class,
         // ]);
+    }
+
+    public function boot()
+    {
+        // mass assignment protection disable
+        Model::unguard(); // unguarding model for not checking if the columns in fillable when the data mass assign. because filament only saves valid data to models sto it is okay to unguard
     }
 }
