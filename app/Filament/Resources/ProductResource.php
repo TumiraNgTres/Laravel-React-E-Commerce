@@ -7,6 +7,7 @@ use App\Enum\RolesEnum;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\Pages\EditProduct;
 use App\Filament\Resources\ProductResource\Pages\ProductImages;
+use App\Filament\Resources\ProductResource\Pages\ProductVariations;
 use App\Filament\Resources\ProductResource\Pages\ProductVariationTypes;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
@@ -37,6 +38,13 @@ class ProductResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-queue-list';
 
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::End;
+
+    // built in function
+    // get the products created by that logined vendor user
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->forVendor();
+    }
 
     public static function form(Form $form): Form
     {
@@ -176,6 +184,7 @@ class ProductResource extends Resource
             'edit' => Pages\EditProduct::route('/{record}/edit'),
             'images' => Pages\ProductImages::route('/{record}/images'),
             'variation-types' => Pages\ProductVariationTypes::route('/{record}/variation-types'),
+            'variations' => Pages\ProductVariations::route('/{record}/variations'),
         ];
     }
 
@@ -185,10 +194,11 @@ class ProductResource extends Resource
             EditProduct::class,
             ProductImages::class,
             ProductVariationTypes::class,
+            ProductVariations::class,
         ]);
     }
 
-    // admin users cannot craete product  and only vendor can create product
+    // admin users cannot create product  and only vendor can create product
     public static function canViewAny(): bool
     {
         $user = Filament::auth()->user();
