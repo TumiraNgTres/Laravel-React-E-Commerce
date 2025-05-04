@@ -48,6 +48,11 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     /**
      * Get all of the variationTypes for the Product
      *

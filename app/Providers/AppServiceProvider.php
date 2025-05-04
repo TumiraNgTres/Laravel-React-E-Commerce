@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
+use Barryvdh\Debugbar\ServiceProvider as DebugbarServiceProvider;
+use Laravel\Telescope\TelescopeServiceProvider;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if ($this->app->isLocal()) {
+            $this->app->register(DebugbarServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
