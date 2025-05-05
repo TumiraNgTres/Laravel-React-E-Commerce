@@ -71,16 +71,35 @@ function ProductCard({ product }: { product: Product }) {
             {product.title}
           </Link>
         </h2>
-        <p className="text-sm text-gray-500 mt-1">
-          by{" "}
-          <Link href="/" className="text-indigo-500 hover:underline">
-            {product.user.name}
-          </Link>{" "}
+
+        {/* Department > Category Display */}
+        <div className="mt-2 text-sm text-gray-500">
           in{" "}
-          <Link href="/" className="text-cyan-600 hover:underline">
+          <Link
+            href="/"
+            className="font-semibold text-indigo-600 hover:underline"
+          >
             {product.department.name}
+          </Link>{" "}
+          &gt;{" "}
+          <Link
+            href="/"
+            className="font-semibold text-cyan-600 hover:underline"
+          >
+            {product.category.name}
           </Link>
-        </p>
+        </div>
+
+        {/* Optional: Tag Badges */}
+        <div className="flex justify-center gap-2 mt-2 flex-wrap">
+          <span className="bg-indigo-100 text-indigo-700 text-xs font-medium px-3 py-1 rounded-full">
+            Dept: {product.department.name}
+          </span>
+          <span className="bg-cyan-100 text-cyan-700 text-xs font-medium px-3 py-1 rounded-full">
+            Category: {product.category.name}
+          </span>
+        </div>
+
         <p className="text-sm text-gray-600 mt-2 line-clamp-3">
           {product.description ||
             "Experience quality and style with this amazing product that delivers exceptional performance with modern design elements."}

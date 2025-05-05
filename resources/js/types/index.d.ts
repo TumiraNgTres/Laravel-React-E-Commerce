@@ -61,6 +61,25 @@ export type Product = {
 
 export type PaginationProps<T> = {
   data: Array<T>;
+  meta: {
+    current_page: number;
+    last_page: number;
+    from: number | null;
+    to: number | null;
+    per_page: number;
+    total: number;
+  };
+  links: Array<{
+    url: string | null;
+    label: string;
+    active: boolean;
+  }>;
+};
+
+type PaginationLink = {
+  url: string | null;
+  label: string;
+  active: boolean;
 };
 
 export type PageProps<
