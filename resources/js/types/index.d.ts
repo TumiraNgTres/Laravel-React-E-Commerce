@@ -59,27 +59,31 @@ export type Product = {
   }>;
 };
 
-export type PaginationProps<T> = {
-  data: Array<T>;
+export interface PaginatedProducts {
+  data: Product[];
+  links: any;
   meta: {
     current_page: number;
     last_page: number;
-    from: number | null;
-    to: number | null;
     per_page: number;
     total: number;
   };
-  links: Array<{
-    url: string | null;
-    label: string;
-    active: boolean;
-  }>;
-};
+}
 
-type PaginationLink = {
+export interface ProductPaginationProps {
+  links: PaginationLink[]; // Simplified from nested structure
+  currentPage: number;
+  lastPage: number;
+}
+
+export interface PaginationLink {
   url: string | null;
   label: string;
   active: boolean;
+}
+
+export type PaginationProps<T> = {
+  data: Array<T>;
 };
 
 export type PageProps<

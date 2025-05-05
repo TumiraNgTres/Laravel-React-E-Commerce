@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { PageProps, PaginationProps, Product } from "@/types";
+import { PaginatedProducts } from "@/types";
 import { Head, router } from "@inertiajs/react";
 import ProductItem from "@/Components/App/ProductItem";
 import Pagination from "@/Components/Core/Pagination";
@@ -11,17 +11,20 @@ import CategoryFilter from "@/Components/App/Shop/CategoryFilter";
 import PriceFilter from "@/Components/App/Shop/PriceFilter";
 import CategoryModal from "@/Components/App/Shop/CategoryModal";
 import FilterToolbar from "@/Components/App/Shop/FilterToolbar";
+interface ShopPageProps {
+  products: PaginatedProducts;
+  filters: any;
+}
 
-export default function Shop({
-  products,
-  filters,
-}: PageProps<{ products: PaginationProps<Product>; filters: any }>) {
+export default function Shop({ products, filters }: ShopPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSort, setSelectedSort] = useState<string>("");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
+
+  console.log(products);
 
   const applyFilters = useCallback(
     debounce((params: any) => {
@@ -76,7 +79,6 @@ export default function Shop({
             handlePriceChange={handlePriceChange}
           />
         </div>
-
         {/* Right: Product Grid and Sort */}
         <div className="w-full md:w-4/5">
           {/* filter bar  */}
@@ -91,11 +93,18 @@ export default function Shop({
 
           {/* list products */}
           {products.data.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {products.data.map((product) => (
-                <ProductItem product={product} key={product.id} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {products.data.map((product) => (
+                  <ProductItem product={product} key={product.id} />
+                ))}
+              </div>
+              <Pagination
+                links={products.links}
+                currentPage={products.meta.current_page}
+                lastPage={products.meta.last_page}
+              />
+            </>
           ) : (
             <div className="bg-white p-8 text-center rounded shadow">
               <p className="text-gray-500">

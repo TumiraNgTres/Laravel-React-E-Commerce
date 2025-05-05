@@ -22,7 +22,7 @@ export default function CategoryFilter({
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-md font-semibold">Categories</h2>
 
-        {categories?.length > 1 && (
+        {categories?.length > 5 && (
           <button
             onClick={() => setShowCategoryModal(true)}
             className="text-sm text-blue-500"
