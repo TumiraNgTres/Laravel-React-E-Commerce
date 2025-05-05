@@ -23,14 +23,17 @@ class ProductController extends Controller
         ]);
     }
 
-   public function shop(Request $request)
+    public function shop(Request $request)
     {
+        // Initialize the query
         $query = Product::query()->published();
 
+        // Category filter
         if ($request->filled('category')) {
             $query->where('category_id', $request->category);
         }
 
+        // Price range filter
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }
@@ -39,6 +42,7 @@ class ProductController extends Controller
             $query->where('price', '<=', $request->price_max);
         }
 
+        // Sorting
         if ($request->sort === 'price_asc') {
             $query->orderBy('price');
         } elseif ($request->sort === 'price_desc') {
@@ -47,24 +51,20 @@ class ProductController extends Controller
             $query->latest();
         }
 
+        // Paginate products
         $products = $query->paginate(12)->withQueryString();
 
-        $categories = Category::select('id', 'name')->get();
+        // Fetch categories with product count
+        $categories = Category::select('id', 'name')
+            ->withCount('products')  // Counts the number of products in each category
+            ->has('products')        // Filters categories that have products
+            ->get();
 
         return Inertia::render('Product/Shop', [
             'products' => ProductListResource::collection($products),
             'filters' => [
                 'categories' => $categories,
             ],
-            // 'meta' => [
-            //     'current_page' => $products->currentPage(),
-            //     'last_page' => $products->lastPage(),
-            //     'from' => $products->firstItem(),
-            //     'to' => $products->lastItem(),
-            //     'per_page' => $products->perPage(),
-            //     'total' => $products->total(),
-            // ],
-            // 'links' => $products->linkCollection()->toArray(),
         ]);
     }
 
