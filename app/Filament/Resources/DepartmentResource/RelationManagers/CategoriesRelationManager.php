@@ -30,8 +30,10 @@ class CategoriesRelationManager extends RelationManager
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+
                 Select::make('parent_id')
                     ->options(function () use ($department) {
+
                         return Category::query()
                             ->where('department_id', $department->id)
                             ->pluck('name', 'id')
@@ -66,13 +68,16 @@ class CategoriesRelationManager extends RelationManager
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+
                 Filter::make('name')
                     ->label('Search by Name'),
 
                 Filter::make('created_at')
                     ->form([
+
                         DatePicker::make('created_from')
                             ->label('Created From'),
+
                         DatePicker::make('created_until')
                             ->label('Created Until'),
                     ])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductListResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,8 +22,22 @@ class ProductController extends Controller
         ]);
     }
 
+    public function shop()
+    {
+        $products = Product::query()
+            ->published()
+            ->paginate(12);
+
+        return Inertia::render('Product/Shop', [
+            'products' => ProductListResource::collection($products),
+        ]);
+    }
+
     public function show(Product $product)
     {
-
+        return Inertia::render('Product/Show', [
+            'product' => new ProductResource($product),
+            'variationOptions' => request('options', [])
+        ]);
     }
 }

@@ -47,6 +47,7 @@ class ProductVariationTypes extends EditRecord
                             ->collapsible()
                             ->columnSpan(2)
                             ->schema([
+
                                 TextInput::make('name')
                                     ->columnSpan(2)
                                     ->required(),

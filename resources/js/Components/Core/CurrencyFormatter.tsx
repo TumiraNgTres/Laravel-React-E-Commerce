@@ -1,14 +1,16 @@
 import React from "react";
 
+type CurrencyFormatterProps = {
+  amount: number;
+  currency?: string;
+  locale?: string;
+};
+
 function CurrencyFormatter({
   amount,
   currency = "USD",
   locale = "en-US",
-}: {
-  amount: number;
-  currency: string;
-  locale: string;
-}) {
+}: CurrencyFormatterProps) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,

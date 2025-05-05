@@ -147,7 +147,9 @@ class ProductResource extends Resource
                     ->colors(ProductStatusEnum::colors()),
 
                 TextColumn::make('department.name'),
+
                 TextColumn::make('category.name'),
+
                 TextColumn::make('created_at')
                     ->dateTime(),
             ])

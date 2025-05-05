@@ -40,8 +40,8 @@ function NavBar() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products" className="font-medium">
-                    Products
+                  <Link href="/shop" className="font-medium">
+                    Shop
                   </Link>
                 </li>
                 <li>
@@ -71,8 +71,8 @@ function NavBar() {
               </Link>
             </li>
             <li>
-              <Link href="/products" className="font-medium">
-                Products
+              <Link href="/shop" className="font-medium">
+                Shop
               </Link>
             </li>
             <li>
