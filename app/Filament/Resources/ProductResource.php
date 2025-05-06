@@ -95,6 +95,7 @@ class ProductResource extends Resource
                 RichEditor::make('description')
                     ->required()
                     ->toolbarButtons([
+                        
                         'blockquote',
                         'bold',
                         'bulletList',

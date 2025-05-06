@@ -13,8 +13,7 @@ function Show({
 }: {
   product: Product;
   variationOptions: number[];
-  }) {
-  
+}) {
   const form = useForm<{
     option_ids: Record<string, number>;
     quantity: number;
@@ -164,7 +163,9 @@ function Show({
   });
 
   const increaseQuantity = () => {
-    setData("quantity", data.quantity + 1);
+    if (data.quantity < computedProduct.quantity) {
+      setData("quantity", data.quantity + 1);
+    }
   };
 
   const decreaseQuantity = () => {
@@ -174,8 +175,10 @@ function Show({
   };
   const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
+    if (!isNaN(value) && value > 0 && value <= computedProduct.quantity) {
       setData("quantity", value);
+    } else if (value > computedProduct.quantity) {
+      setData("quantity", computedProduct.quantity);
     }
   };
   /* ----------------------------------------------------------------------------- */
@@ -269,6 +272,7 @@ function Show({
         />
         <button
           onClick={increaseQuantity}
+          disabled={data.quantity >= computedProduct.quantity}
           className="px-3 py-1.5 text-sm bg-gray-50 hover:bg-gray-100"
         >
           +
@@ -305,15 +309,15 @@ function Show({
     <AuthenticatedLayout>
       <Head title={product.title} />
 
-      <div className="container mx-auto p-4 md:p-8">
+      <div className="container mx-auto p-4 md:p-8 min-h-[calc(100vh-150px)]">
         <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
-          {/* Left Column - Image Carousel (7 cols) */}
-          <div className="lg:col-span-6">
+          {/* Left Column - Image Carousel */}
+          <div className="lg:col-span-6 lg:sticky lg:top-4 lg:self-start">
             <Carousel images={images} />
           </div>
 
-          {/* Right Column - Product Details (5 cols) */}
-          <div className="lg:col-span-6">
+          {/* Right Column - Product Details (scrollable but hides scrollbar) */}
+          <div className="lg:col-span-6 lg:overflow-y-auto scrollbar-hide">
             {/* Product Title */}
             <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
 
@@ -336,13 +340,15 @@ function Show({
               )}
 
             {/* Add to Cart Section */}
-            <div className="my-6">{renderAddToCartButton()}</div>
+            <div className="my-6 sticky bottom-0 bg-white py-4 z-10 lg:static lg:bg-transparent lg:py-0">
+              {renderAddToCartButton()}
+            </div>
 
             {/* About the Item Section */}
-            <div className="product-description">
+            <div className="product-description pb-8">
               <h2 className="text-xl font-bold mb-2">About the Item</h2>
               <div
-                className="prose max-w-none"
+                className="prose max-w-none text-gray-700 ck-content-output"
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
             </div>
