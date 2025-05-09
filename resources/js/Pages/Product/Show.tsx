@@ -44,7 +44,6 @@ function Show({
   */
 
   // images get for the selected variant or if no combination, default product images memorize it
-
   // take the first variant's image . not the combination image. there is no combination image
 
   const images = useMemo(() => {
@@ -123,6 +122,7 @@ function Show({
   /* ----------------------------------------------------------------------------- */
 
   const getOptionIdsMap = (newOption: Object) => {
+    // { 1:1 }
     // converting to "1": 1 format
     return Object.fromEntries(
       Object.entries(newOption).map(([a, b]) => [a, b.id])
@@ -159,28 +159,14 @@ function Show({
   /* ----------------------------- QUANTITY CHANGE ------------------------------ */
 
   const { data, setData } = useForm({
-    quantity: 1, // Default quantity
+    quantity: 1,
   });
 
-  const increaseQuantity = () => {
-    if (data.quantity < computedProduct.quantity) {
-      setData("quantity", data.quantity + 1);
-    }
+  const handleQuantitySelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value);
+    form.setData("quantity", value);
   };
 
-  const decreaseQuantity = () => {
-    if (data.quantity > 1) {
-      setData("quantity", data.quantity - 1);
-    }
-  };
-  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0 && value <= computedProduct.quantity) {
-      setData("quantity", value);
-    } else if (value > computedProduct.quantity) {
-      setData("quantity", computedProduct.quantity);
-    }
-  };
   /* ----------------------------------------------------------------------------- */
   /* --------------------------------- ADD TO CART ------------------------------- */
   const addToCart = () => {
@@ -256,27 +242,25 @@ function Show({
 
   const renderAddToCartButton = () => (
     <div className="mb-6 flex flex-wrap items-center gap-3">
-      <div className="flex items-center border rounded-md overflow-hidden bg-white shadow-sm">
-        <button
-          onClick={decreaseQuantity}
-          className="px-3 py-1.5 text-sm bg-gray-50 hover:bg-gray-100"
+      <div className="flex items-center gap-2">
+        <label htmlFor="quantity" className="text-sm font-medium">
+          Qty:
+        </label>
+        <select
+          id="quantity"
+          value={form.data.quantity}
+          onChange={handleQuantitySelect}
+          className="text-sm px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-purple-500"
         >
-          −
-        </button>
-        <input
-          type="number"
-          min="1"
-          value={data.quantity}
-          onChange={handleQuantityChange}
-          className="w-12 h-9 text-center text-sm border-x outline-none"
-        />
-        <button
-          onClick={increaseQuantity}
-          disabled={data.quantity >= computedProduct.quantity}
-          className="px-3 py-1.5 text-sm bg-gray-50 hover:bg-gray-100"
-        >
-          +
-        </button>
+          {Array.from(
+            { length: computedProduct.quantity },
+            (_, i) => i + 1
+          ).map((qty) => (
+            <option key={qty} value={qty}>
+              {qty}
+            </option>
+          ))}
+        </select>
       </div>
 
       <button

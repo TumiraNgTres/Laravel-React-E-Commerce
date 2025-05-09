@@ -2,63 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Interface\CartInterface;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    protected $cartService;
+    public function __construct(CartInterface $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        dd($this->cartService);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
-    }
+        $request->mergeIfMissing([
+            'quantity' => 1
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $data = $request->validate([
+            'option_ids' => ['nullable', 'array'],
+            'quantity' => ['required', 'integer', 'min:1']
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $this->cartService->addItemToCart($product, $data['quantity'], $data['option_ids'] ?? null);
+
+        return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'quantity' => ['integer', 'min:1']
+        ]);
+
+        $optionIds = $request->input('option_ids');
+        $quantity = $request->input('quantity');
+
+        $this->cartService->updateItemQuantity($product->id, $quantity, $optionIds);
+
+        return redirect()->back()->with('success', 'Quantity was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, Product $product)
     {
-        //
+        $optionIds = $request->input('option_ids');
+
+        $this->cartService->removeItemFromCart($product->id, $optionIds);
+
+        return back()->with('success', 'Product was removed from cart');
     }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Interface\CartInterface;
+use App\Interface\Repositories\CartRepositoryInterface;
+use App\Repositories\CartRepository;
+use App\Services\CartService;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(DebugbarServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+
+        $this->app->singleton(CartInterface::class, function ($app) {
+            return new CartService($app->make(CartRepositoryInterface::class));
+        });
+
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
     }
 
     /**

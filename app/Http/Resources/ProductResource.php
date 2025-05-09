@@ -41,7 +41,7 @@ class ProductResource extends JsonResource
             ],
             'category'       => [
                 'id'   => $this->category->id,
-                'name' => $this->category->name,
+                'name' => $this->category->name, 
             ],
             // product variation types added to that product
             'variationTypes' => $this->variationTypes->map(function ($variationType) {

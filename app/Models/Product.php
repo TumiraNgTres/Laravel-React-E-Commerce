@@ -28,16 +28,6 @@ class Product extends Model implements HasMedia
             ->width(1200);
     }
 
-    public function scopeForVendor(Builder $query): Builder
-    {
-        return $query->where('created_by', auth()->user()->id);
-    }
-
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->where('status', ProductStatusEnum::Published);
-    }
-
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
@@ -66,5 +56,37 @@ class Product extends Model implements HasMedia
     public function variations(): HasMany
     {
         return $this->hasMany(ProductVariation::class, 'product_id');
+    }
+
+    public function scopeForVendor(Builder $query): Builder
+    {
+        return $query->where('created_by', auth()->user()->id);
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', ProductStatusEnum::Published);
+    }
+
+    public function scopeForWebsite(Builder $query): Builder
+    {
+        return $query->published();
+    }
+
+    public function getPriceForOptions($optionIds = [])
+    {
+        //  change to only take the option ids . not key - type id
+        $optionIds = array_values($optionIds);
+        sort($optionIds);
+
+        foreach ($this->variations as $variation) {
+            $variation_type_option_ids = $variation->variation_type_option_ids;
+
+            if ($optionIds == $variation_type_option_ids) {
+                return $variation->price !== null ? $variation->price : $this->price;
+            }
+        }
+
+        return $this->price;
     }
 }

@@ -82,6 +82,17 @@ export interface PaginationLink {
   active: boolean;
 }
 
+export interface cartItems {
+  id: number;
+  product_id: number;
+  title: string;
+  slug: string;
+  price: number;
+  quantity: number;
+  option_ids: Record<string, number>;
+  options: VariationTypeOption[];
+}
+
 export type PaginationProps<T> = {
   data: Array<T>;
 };
@@ -93,4 +104,8 @@ export type PageProps<
     user: User;
   };
   ziggy: Config & { location: string };
+
+  totalQuantity: number;
+  totalPrice: number;
+  cartItems: cartItems[];
 };
