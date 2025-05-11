@@ -60,7 +60,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Quantity was updated');
     }
 
-    /**
+    /** 
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, Product $product)

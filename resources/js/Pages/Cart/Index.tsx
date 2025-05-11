@@ -28,6 +28,8 @@ function Index({
                 </div>
               )}
 
+              {/* <pre>{JSON.stringify(cartItems, undefined, 10)}</pre> */}
+
               {Object.values(cartItems).map((cartItem) => (
                 <div key={cartItem.user.id}>
                   <div className="flex items-center justify-between pb-4 border-b border-gray-300 mb-4">
@@ -51,15 +53,13 @@ function Index({
                     </div>
                   </div>
 
-                  {Object.values(cartItems).map((cartItem) => (
-                    <div key={cartItem.user.id} className="mb-6">
-                      <div className="flex flex-col gap-4 w-full pb-4 border-b border-gray-300 mb-4">
-                        {cartItem.items.map((item) => (
-                          <CartItem item={item} key={item.id} />
-                        ))}
-                      </div>
+                  <div key={cartItem.user.id} className="mb-6">
+                    <div className="flex flex-col gap-4 w-full pb-4 border-b border-gray-300 mb-4">
+                      {cartItem.items.map((item) => (
+                        <CartItem item={item} key={item.id} />
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               ))}
             </div>
