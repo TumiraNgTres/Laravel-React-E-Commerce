@@ -71,8 +71,6 @@ class CartService implements CartInterface
                     $cartItems = $this->getCartItemsFromDatabase();
                 } else {
                     $cartItems = $this->getCartItemsFromCookies();
-
-                    // dd($cartItems);
                 }
 
                 // cartItems is array and convert this to collection using collect()
@@ -217,6 +215,7 @@ class CartService implements CartInterface
         if ($cartItem) {
             $cartItem->update([
                 'quantity' => $cartItem->quantity + $quantity,
+                // 'price' => $price
             ]);
         } else {
             CartItem::create([
@@ -283,5 +282,22 @@ class CartService implements CartInterface
     {
         $cartItems = CommonHelper::getCartItemsFromCookies();
         return $cartItems;
+    }
+
+    public function getCartItemsGrouped(): array
+    {
+        $cartItems = $this->getCartItems();
+
+        $data = collect($cartItems)
+            ->groupBy(fn($item) => $item['users']['id'])
+            ->map(fn($items, $userId) => [
+                'user' => $items->first()['users'],
+                'items' => $items->toArray(),
+                'totalQuantity' => $items->sum('quantity'),
+                'totalPrice' => $items->sum(fn($item) => ($item['price'] * $item['quantity']))
+            ])
+            ->toArray();
+
+        return $data;
     }
 }

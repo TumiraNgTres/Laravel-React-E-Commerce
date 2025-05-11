@@ -91,6 +91,14 @@ export interface cartItems {
   quantity: number;
   option_ids: Record<string, number>;
   options: VariationTypeOption[];
+  image: string;
+}
+
+export interface GroupedCartItems {
+  user: User;
+  items: cartItems[];
+  totalPrice: number;
+  totalQuantity: number;
 }
 
 export type PaginationProps<T> = {
@@ -100,6 +108,7 @@ export type PaginationProps<T> = {
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
+  csrf_token: string;
   auth: {
     user: User;
   };
@@ -107,5 +116,5 @@ export type PageProps<
 
   totalQuantity: number;
   totalPrice: number;
-  cartItems: cartItems[];
+  miniCartItems: cartItems[];
 };

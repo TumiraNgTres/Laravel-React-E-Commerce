@@ -15,4 +15,6 @@ interface CartInterface
     public function getTotalQuantity(): int;
 
     public function getTotalPrice(): float;
+
+    public function getCartItemsGrouped(): array;
 }

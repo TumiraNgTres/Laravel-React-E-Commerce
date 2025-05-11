@@ -265,7 +265,7 @@ function Show({
 
       <button
         onClick={addToCart}
-        className="bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium px-3 py-2 rounded-md transition flex items-center gap-1.5 shadow-sm"
+        className="bg-purple-800 hover:bg-purple-700 text-white text-sm font-medium px-3 py-2 rounded-md transition flex items-center gap-1.5 shadow-sm"
       >
         <FaCartPlus className="w-4 h-4" />
         Add to Cart

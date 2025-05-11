@@ -102,7 +102,7 @@ function NavBar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-7 rounded-full ring ring-violet-800 ring-offset-base-100 ring-offset-2">
+                <div className="w-7 rounded-full ring ring-purple-800 ring-offset-base-100 ring-offset-2">
                   <img
                     alt="User avatar"
                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
@@ -145,13 +145,13 @@ function NavBar() {
               <div className="flex gap-2">
                 <Link
                   href={route("login")}
-                  className="btn btn-ghost btn-sm rounded-lg hover:bg-violet-800 hover:text-white transition-colors"
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-purple-800 hover:text-white transition-colors"
                 >
                   Log in
                 </Link>
                 <Link
                   href={route("register")}
-                  className="btn btn-sm rounded-lg bg-violet-800 text-white hover:bg-violet-700 focus:bg-violet-700"
+                  className="btn btn-sm rounded-lg bg-purple-800 text-white hover:bg-purple-700 focus:bg-purple-700"
                 >
                   Register
                 </Link>
