@@ -38,7 +38,11 @@ class CartController extends Controller
             'quantity' => ['required', 'integer', 'min:1']
         ]);
 
-        $this->cartService->addItemToCart($product, $data['quantity'], $data['option_ids'] ?? null);
+        $this->cartService->addItemToCart(
+            $product,
+            $data['quantity'],
+            $data['option_ids'] ?: []
+        );
 
         return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
@@ -52,7 +56,7 @@ class CartController extends Controller
             'quantity' => ['integer', 'min:1']
         ]);
 
-        $optionIds = $request->input('option_ids');
+        $optionIds = $request->input('option_ids') ?: [];
         $quantity = $request->input('quantity');
 
         $this->cartService->updateItemQuantity($product->id, $quantity, $optionIds);
@@ -60,7 +64,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Quantity was updated');
     }
 
-    /** 
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, Product $product)
@@ -72,8 +76,5 @@ class CartController extends Controller
         return back()->with('success', 'Product was removed from cart');
     }
 
-    public function checkout(Request $request)
-    {
-
-    }
+    public function checkout(Request $request) {}
 }

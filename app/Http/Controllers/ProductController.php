@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function shop(Request $request)
     {
         // Initialize the query
-        $query = Product::query()->published();
+        $query = Product::query()->forWebsite();
 
         // Category filter
         if ($request->filled('category')) {

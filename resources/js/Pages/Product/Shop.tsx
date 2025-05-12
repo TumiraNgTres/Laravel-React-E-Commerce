@@ -24,8 +24,9 @@ export default function Shop({ products, filters }: ShopPageProps) {
   const [categorySearch, setCategorySearch] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
 
-  console.log(products);
+  // debounce and callback for only make search request after 600 seconds delay like livewire debounce
 
+  // useCallback - memoizes (memorize) the function. so that on each rendre it dont create a new function
   const applyFilters = useCallback(
     debounce((params: any) => {
       router.get(route("shop"), params, {

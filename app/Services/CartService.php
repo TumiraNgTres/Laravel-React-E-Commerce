@@ -29,6 +29,7 @@ class CartService implements CartInterface
 
     public function addItemToCart(Product $product, int $quantity = 1, $optionIds = null)
     {
+
         if ($optionIds === null) {
             //  variation type id is the key and option id is value
             $optionIds = $product->variationTypes()
@@ -299,5 +300,34 @@ class CartService implements CartInterface
             ->toArray();
 
         return $data;
+    }
+
+    // move guest user cart item from cookies to database when login
+    public function moveCartItemsToDatabase($userId): void
+    {
+        $cartItems = $this->getCartItemsFromCookies();
+
+        foreach ($cartItems as $key => $cartItem) {
+            $existingItem = $this->cartRepo->getCartItemByUserIdAndProductIdAndVariant($userId, $cartItem['product_id'], $cartItem['option_ids']);
+
+            if ($existingItem) {
+                // update existing item
+                $existingItem->update([
+                    'quantity' => $existingItem->quantity + $cartItem['quantity'],
+                    'price' => $cartItem['price'],
+                ]);
+            } else {
+                CartItem::create([
+                    'user_id' => $userId,
+                    'product_id' => $cartItem['product_id'],
+                    'quantity' => $cartItem['quantity'],
+                    'price' => $cartItem['quantity'],
+                    'variation_type_option_ids' => json_encode($cartItem['option_ids']),
+                ]);
+            }
+
+            // delete all that cookie datas after transfering to database
+            Cookie::queue(self::COOKIE_NAME, '', -1);
+        }
     }
 }

@@ -17,4 +17,6 @@ interface CartInterface
     public function getTotalPrice(): float;
 
     public function getCartItemsGrouped(): array;
+
+    public function moveCartItemsToDatabase($userId): void;
 }

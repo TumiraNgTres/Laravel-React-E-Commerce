@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Product } from "@/types";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { FaCartPlus } from "react-icons/fa";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Eye } from "lucide-react";
@@ -14,6 +14,24 @@ function ProductCard({ product }: { product: Product }) {
     e.stopPropagation();
     setWishlisted(!wishlisted);
     // Future: Integrate API call to update wishlist status
+  };
+
+  const form = useForm<{
+    option_ids: Record<string, number>;
+    quantity: number;
+  }>({
+    option_ids: {},
+    quantity: 1,
+  });
+
+  const addToCart = () => {
+    form.post(route("cart.store", product.id), {
+      preserveScroll: true,
+      preserveState: true,
+      onError: (err) => {
+        console.log(err);
+      },
+    });
   };
 
   return (
@@ -32,11 +50,7 @@ function ProductCard({ product }: { product: Product }) {
           <button
             className="bg-white text-gray-700 rounded-full p-2 shadow-md hover:bg-gradient-to-r hover:from-indigo-500 hover:to-blue-500 hover:text-white transition-colors duration-200"
             title="Add to Cart"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              // Future: Implement add to cart functionality
-            }}
+            onClick={addToCart}
           >
             <FaCartPlus className="w-4 h-4" />
           </button>

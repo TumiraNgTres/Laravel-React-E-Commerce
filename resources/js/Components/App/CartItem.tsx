@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Link, router, useForm } from "@inertiajs/react";
 import { cartItems as CartItemType } from "@/types";
 import { ProductRoute } from "@/helpers";
 import TextInput from "../Core/TextInput";
 import CurrencyFormatter from "../Core/CurrencyFormatter";
+import { debounce } from "lodash";
 
 function CartItem({ item }: { item: CartItemType }) {
   const deleteForm = useForm({
@@ -19,25 +20,32 @@ function CartItem({ item }: { item: CartItemType }) {
     });
   };
 
+  const debouncedUpdateQuantity = useCallback(
+    debounce((newQty: number) => {
+      router.put(
+        route("cart.update", item.product_id),
+        {
+          quantity: newQty,
+          option_ids: item.option_ids,
+        },
+        {
+          preserveScroll: true,
+          onError: (errors) => {
+            if (errors.quantity) {
+              setError(Object.values(errors.quantity)[0]);
+            }
+          },
+        }
+      );
+    }, 700), // Wait 700ms after user stops changing
+    []
+  );
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQty = Number(e.target.value);
     setError("");
     setQuantity(newQty);
-    router.put(
-      route("cart.update", item.product_id),
-      {
-        quantity: newQty,
-        option_ids: item.option_ids,
-      },
-      {
-        preserveScroll: true,
-        onError: (errors) => {
-          if (errors.quantity) {
-            setError(Object.values(errors.quantity)[0]);
-          }
-        },
-      }
-    );
+    debouncedUpdateQuantity(newQty); // trigger debounced backend call
   };
 
   return (
