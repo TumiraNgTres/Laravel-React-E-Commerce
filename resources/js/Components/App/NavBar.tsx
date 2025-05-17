@@ -145,7 +145,7 @@ function NavBar() {
               <div className="flex gap-2">
                 <Link
                   href={route("login")}
-                  className="btn btn-ghost btn-sm rounded-lg hover:bg-purple-800 hover:text-white transition-colors"
+                  className="btn btn-ghost btn-sm rounded-lg hover:bg-purple-700 hover:text-white transition-colors"
                 >
                   Log in
                 </Link>

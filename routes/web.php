@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +26,8 @@ Route::prefix('cart')
     });
 /* ------------------ */
 
+Route::post('stripe/webhook', [StripeController::class, 'webhook'])->name('stripe.webhook');
+
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -38,6 +41,14 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['verified'])->group(function () {
         Route::post('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
+        Route::prefix('stripe')
+            ->controller(StripeController::class)
+            ->name('stripe.')
+            ->group(function () {
+                Route::get('success',  'success')->name('success');
+                Route::get('failure',  'failure')->name('failure');
+            });
     });
 });
 

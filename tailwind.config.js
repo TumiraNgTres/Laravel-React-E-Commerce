@@ -8,11 +8,14 @@ export default {
     "./resources/views/**/*.blade.php",
     "./resources/js/**/*.tsx",
   ],
-
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
         sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+      },
+      transitionProperty: {
+        width: "width",
       },
     },
   },

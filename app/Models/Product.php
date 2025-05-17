@@ -89,4 +89,29 @@ class Product extends Model implements HasMedia
 
         return $this->price;
     }
+
+    // In Product model
+    public function getImageForOptions(array $optionIds = null, $preloadedVariationOptions = null)
+    {
+        if ($optionIds) {
+            $optionIds = array_values($optionIds);
+            sort($optionIds);
+
+            if ($preloadedVariationOptions) {
+                // Filter preloaded options by these IDs
+                $options = $preloadedVariationOptions->whereIn('id', $optionIds);
+            } else {
+                $options = VariationTypeOption::whereIn('id', $optionIds)->get();
+            }
+
+            foreach ($options as $option) {
+                $image = $option->getFirstMediaUrl('images', 'small');
+                if ($image) {
+                    return $image;
+                }
+            }
+        }
+
+        return $this->getFirstMediaUrl('images', 'small');
+    }
 }

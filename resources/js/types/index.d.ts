@@ -7,6 +7,7 @@ export interface User {
   email_verified_at?: string;
 }
 
+// ------------ PRODUCT ---------------
 export type Image = {
   id: number;
   thumb: string;
@@ -82,6 +83,8 @@ export interface PaginationLink {
   active: boolean;
 }
 
+// ---------------------------------------
+// -------------- CART -------------------
 export interface cartItems {
   id: number;
   product_id: number;
@@ -93,13 +96,42 @@ export interface cartItems {
   options: VariationTypeOption[];
   image: string;
 }
-
 export interface GroupedCartItems {
   user: User;
   items: cartItems[];
   totalPrice: number;
   totalQuantity: number;
 }
+// ---------------------------------------
+// -------------- ORDER ------------------
+export interface OrderItem {
+  id: number;
+  quantity: number;
+  price: number;
+  variation_type_option_ids: number[];
+  product: {
+    id: number;
+    title: string;
+    slug: string;
+    description: string;
+    image: Image;
+  };
+}
+
+export interface Order {
+  id: number;
+  total_price: number;
+  status: string;
+  created_at: string;
+  vendorUser: {
+    id: number;
+    name: string;
+    store_name: string;
+    store_address: string;
+  };
+  orderItems: OrderItem[];
+}
+// ---------------------------------------
 
 export type PaginationProps<T> = {
   data: Array<T>;
@@ -113,7 +145,8 @@ export type PageProps<
     user: User;
   };
   ziggy: Config & { location: string };
-
+  success: string;
+  error: string;
   totalQuantity: number;
   totalPrice: number;
   miniCartItems: cartItems[];
