@@ -145,7 +145,10 @@ export type PageProps<
     user: User;
   };
   ziggy: Config & { location: string };
-  success: string;
+  success: {
+    message: string;
+    time: number;
+  };
   error: string;
   totalQuantity: number;
   totalPrice: number;
