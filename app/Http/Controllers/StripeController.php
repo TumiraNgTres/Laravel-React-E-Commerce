@@ -18,12 +18,10 @@ use Stripe\Webhook;
 class StripeController extends Controller
 {
     protected $stripeWebhookService;
-
     public function __construct(StripeWebhookService $stripeWebhookService)
     {
         $this->stripeWebhookService = $stripeWebhookService;
     }
-
     public function success(Request $request)
     {
         $user = auth()->user();

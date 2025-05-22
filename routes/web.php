@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('failure',  'failure')->name('failure');
             });
     });
-});
+}); 
 
 /* ----------------------------------------- */
 

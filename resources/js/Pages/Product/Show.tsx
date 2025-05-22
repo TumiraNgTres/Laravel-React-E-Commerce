@@ -226,7 +226,9 @@ function Show({
               <input
                 onChange={() => chooseOption(type.id, option)}
                 key={option.id}
-                className={"joint-item btn"}
+                className={`joint-item btn rounded-md ${
+                  selectedOptions[type.id]?.id === option.id ? "primary" : ""
+                }`}
                 type="radio"
                 value={option.id}
                 checked={selectedOptions[type.id]?.id === option.id}

@@ -3,9 +3,12 @@
 namespace App\Services;
 
 use App\Enum\OrderStatusEnum;
+use App\Mail\CheckoutCompleted;
+use App\Mail\NewOrderMail;
 use App\Models\CartItem;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
 
 class StripeWebhookService
@@ -99,9 +102,9 @@ class StripeWebhookService
 
             $order->save();
 
-            // TODO: Notify vendor
+            Mail::to($order->vendorUser)->send(new NewOrderMail($order));
         }
 
-        // TODO: Notify buyer
+        Mail::to($orders[0]->user)->send(new CheckoutCompleted($orders));
     }
 }

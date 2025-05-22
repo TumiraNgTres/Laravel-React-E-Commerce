@@ -58,8 +58,8 @@ function NavBar() {
               </ul>
             )}
           </div>
-          <Link href="/" className="btn btn-ghost text-xl font-bold">
-            myStore
+          <Link href="/">
+            <img src="/images/logo-karthive-removebg.jpg" alt="Karthive" />
           </Link>
         </div>
 
