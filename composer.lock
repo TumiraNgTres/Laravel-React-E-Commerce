@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec0b9190f83ef7b33548237a5f922b18",
+    "content-hash": "151d9e7a8b8e478f67159b6ad7b42063",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5104,6 +5104,76 @@
                 }
             ],
             "time": "2025-02-25T09:09:36+00:00"
+        },
+        {
+            "name": "simonhamp/laravel-stripe-connect",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Archanaub04/laravel-stripe-connect.git",
+                "reference": "8e92aece043adaf5c888ea0b82c6e04c8629787f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Archanaub04/laravel-stripe-connect/zipball/8e92aece043adaf5c888ea0b82c6e04c8629787f",
+                "reference": "8e92aece043adaf5c888ea0b82c6e04c8629787f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "stripe/stripe-php": ">=10.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SimonHamp\\LaravelStripeConnect\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SimonHamp\\LaravelStripeConnect\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "SimonHamp\\LaravelStripeConnect\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rap2h",
+                    "email": "raphaelht@gmail.com"
+                },
+                {
+                    "name": "Simon Hamp",
+                    "email": "simon.hamp@me.com"
+                }
+            ],
+            "keywords": [
+                "billing",
+                "laravel",
+                "stripe"
+            ],
+            "support": {
+                "source": "https://github.com/Archanaub04/laravel-stripe-connect/tree/master"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/simonhamp"
+                }
+            ],
+            "time": "2025-05-22T10:26:08+00:00"
         },
         {
             "name": "spatie/color",
@@ -11759,8 +11829,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "simonhamp/laravel-stripe-connect": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

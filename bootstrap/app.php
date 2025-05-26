@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,9 +24,17 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-            'stripe/*',
+            'stripe/webhook',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+
+    ->withSchedule(function (Schedule $schedule) {
+        // Add your scheduled commands here
+        $schedule->command('payout:vendors')
+            ->monthlyOn(1, '00:00') // start of month
+            ->withoutOverlapping();
+    })
+    ->create();

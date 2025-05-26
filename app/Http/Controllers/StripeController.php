@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enum\OrderStatusEnum;
 use App\Http\Resources\OrderViewResource;
-use App\Models\CartItem;
+use App\Interface\StripeWebhookInterface;
 use App\Models\Order;
-use App\Services\StripeWebhookService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -18,7 +16,7 @@ use Stripe\Webhook;
 class StripeController extends Controller
 {
     protected $stripeWebhookService;
-    public function __construct(StripeWebhookService $stripeWebhookService)
+    public function __construct(StripeWebhookInterface $stripeWebhookService)
     {
         $this->stripeWebhookService = $stripeWebhookService;
     }
@@ -67,5 +65,19 @@ class StripeController extends Controller
         $this->stripeWebhookService->handle($event, $stripe);
 
         return response('', 200);
+    }
+
+    public function connect()
+    {
+        if (! auth()->user()->getStripeAccountId()) {
+            auth()->user()->createStripeAccount(['type' => 'express']);
+        }
+
+        // if user is not active - redirect user to stripe account link page for onboarding
+        if (! auth()->user()->isStripeAccountActive()) {
+            return redirect(auth()->user()->getStripeAccountLink());
+        }
+
+        return back()->with('success', 'Your account is already connected.');
     }
 }

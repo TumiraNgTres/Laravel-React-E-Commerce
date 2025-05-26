@@ -30,11 +30,9 @@ class CartService implements CartInterface
     public function addItemToCart(Product $product, int $quantity = 1, $optionIds = null)
     {
 
-        if ($optionIds === null) {
+        if (!$optionIds) {
             //  variation type id is the key and option id is value
-            $optionIds = $product->variationTypes()
-                ->mapWithKeys(fn(VariationType $type) => [$type->id => $type->options[0]?->id])
-                ->toArray();
+            $optionIds = $product->getFirstOptionsMap();
         }
 
         $price = $product->getPriceForOptions($optionIds);

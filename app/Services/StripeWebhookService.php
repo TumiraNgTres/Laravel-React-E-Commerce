@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enum\OrderStatusEnum;
+use App\Interface\StripeWebhookInterface;
 use App\Mail\CheckoutCompleted;
 use App\Mail\NewOrderMail;
 use App\Models\CartItem;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
 
-class StripeWebhookService
+class StripeWebhookService implements StripeWebhookInterface
 {
     public function handle($event, StripeClient $stripe): void
     {

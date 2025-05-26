@@ -184,7 +184,7 @@ class ProductVariations extends EditRecord
             // loops variant's option values = like black, blue, purple
             foreach ($variationType->options as $option) {
 
-                // add teh current option to each existing combinations  -cartesian product like
+                // add the current option to each existing combinations - cartesian product like
                 // already color only combination, then second time will add size options to it
 
                 foreach ($result as $combination) {
@@ -217,7 +217,6 @@ class ProductVariations extends EditRecord
                     */
                 }
             }
-
             $result = $temp; // update (push to result) the result with the data in temp
         }
 
@@ -238,10 +237,27 @@ class ProductVariations extends EditRecord
     {
         $formattedData = [];
 
+        /*
+             0 => array:5 [
+                "variation_type_9" => array:2 [▼
+                    "id" => 25
+                    "label" => "Color"
+                ]
+                "variation_type_10" => array:2 [▼
+                    "id" => 28
+                    "label" => "Size"
+                ]
+                "quantity" => 3
+                "price" => "25.0000"
+                "id" => 227
+                ]
+        */
+
         // loop through each variation to restructure it
         foreach ($data['variations'] as $option) {
             $variationTypeOptionIds = [];
 
+            // making the array [9,10] format
             foreach ($this->record->variationTypes as $i => $variationType) {
                 $variationTypeOptionIds[] = $option['variation_type_' . ($variationType->id)]['id'];
             }
@@ -269,7 +285,7 @@ class ProductVariations extends EditRecord
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $variations = $data['variations'];
-        unset($data['variations']);
+        unset($data['variations']); // removes the variations key from the $data array before updating the main product.
 
         // Update the main product record
         $record->update($data);

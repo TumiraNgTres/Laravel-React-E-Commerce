@@ -100,6 +100,7 @@ function Show({
     };
   }, [product, selectedOptions]);
   /* ----------------------------------------------------------------------------- */
+
   /* ------------------------------- useeffect ---------------------------------- */
   useEffect(() => {
     // check the variation type and options with the selected options
@@ -190,6 +191,7 @@ function Show({
   //   });
   // };
   /* ----------------------------------------------------------------------------- */
+
   /* --------------------------------- RENDERING --------------------------------- */
   const renderProductVariationTypes = () => {
     return product.variationTypes.map((type, index) => (

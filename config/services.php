@@ -36,6 +36,7 @@ return [
     ],
 
     'stripe' => [
+        'public_key' => env('STRIPE_KEY'),
         'secret_key' => env('STRIPE_SECRET'),
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
         'platform_fee_pct' => 10,

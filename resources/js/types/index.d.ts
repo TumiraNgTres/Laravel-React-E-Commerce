@@ -5,6 +5,20 @@ export interface User {
   name: string;
   email: string;
   email_verified_at?: string;
+  stripe_account_active: boolean;
+  vendor: {
+    status: string;
+    status_label: string;
+    store_name: string;
+    store_address: string;
+    cover_image: string;
+  };
+}
+
+export interface Vendor {
+  id: number;
+  store_name: string;
+  store_address: string;
 }
 
 // ------------ PRODUCT ---------------
@@ -42,6 +56,7 @@ export type Product = {
   user: {
     id: number;
     name: string;
+    store_name: string;
   };
   department: {
     id: number;
@@ -59,6 +74,8 @@ export type Product = {
     price: number;
   }>;
 };
+
+// -------------------------------------------
 
 export interface PaginatedProducts {
   data: Product[];

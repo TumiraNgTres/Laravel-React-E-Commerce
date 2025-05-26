@@ -66,7 +66,7 @@ export default function AuthenticatedLayout({
       {successMessage.length > 0 && (
         <div className="toast toast-top toast-end z-[1000] mt-16">
           {successMessage.map((msg) => (
-            <div className="alert alert-success" key={msg.id}>
+            <div className="alert alert-success text-white" key={msg.id}>
               <span>{msg.message}</span>
             </div>
           ))}
