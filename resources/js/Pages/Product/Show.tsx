@@ -3,7 +3,7 @@ import CurrencyFormatter from "@/Components/Core/CurrencyFormatter";
 import { arraysAreEqual } from "@/helpers";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Product, VariationTypeOption } from "@/types";
-import { Head, router, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { FaCartPlus } from "react-icons/fa6";
 
@@ -307,7 +307,22 @@ function Show({
           {/* Right Column - Product Details (scrollable but hides scrollbar) */}
           <div className="lg:col-span-6 lg:overflow-y-auto scrollbar-hide">
             {/* Product Title */}
-            <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
+            <h1 className="text-2xl font-bold">{product.title}</h1>
+
+            {/* vendor */}
+            <p className="mb-4">
+              by{" "}
+              <Link
+                href={route("vendor.profile", product.user.store_name)}
+                className="hover:underline"
+              >
+                {product.user.name}
+              </Link>{" "}
+              in{" "}
+              <Link href="/" className="hover:underline">
+                {product.department.name}
+              </Link>
+            </p>
 
             {/* Price */}
             <div className="text-3xl font-semibold mb-6">
