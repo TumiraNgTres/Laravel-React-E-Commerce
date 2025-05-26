@@ -18,11 +18,20 @@ class VendorController extends Controller
         $products = Product::query()
             ->where('created_by', $vendor->user_id)
             ->forWebsite()
-            ->paginate();
+            ->paginate(1);
 
         return Inertia::render('Vendor/Profile', [
             'vendor' => $vendor,
-            'products' => ProductListResource::collection($products)
+            'products' => [
+                'data' => ProductListResource::collection($products)->resolve(),
+                'links' => $products->toArray()['links'],
+                'meta' => [
+                    'current_page' => $products->currentPage(),
+                    'last_page' => $products->lastPage(),
+                    'per_page' => $products->perPage(),
+                    'total' => $products->total(),
+                ],
+            ],
         ]);
     }
     public function store(Request $request)

@@ -12,7 +12,7 @@ import PriceFilter from "@/Components/App/Shop/PriceFilter";
 import CategoryModal from "@/Components/App/Shop/CategoryModal";
 import FilterToolbar from "@/Components/App/Shop/FilterToolbar";
 interface ShopPageProps {
-  products: PaginatedProducts;
+  products: PaginatedProducts; 
   filters: any;
 }
 
