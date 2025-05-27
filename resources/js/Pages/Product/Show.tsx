@@ -319,7 +319,10 @@ function Show({
                 {product.user.name}
               </Link>{" "}
               in{" "}
-              <Link href="/" className="hover:underline">
+              <Link
+                href={route("product.byDepartment", product.department.slug)}
+                className="hover:underline"
+              >
                 {product.department.name}
               </Link>
             </p>

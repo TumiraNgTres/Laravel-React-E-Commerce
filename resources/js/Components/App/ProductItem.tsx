@@ -76,9 +76,11 @@ function ProductItem({ product }: { product: Product }) {
         </h3>
 
         <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-          <span className="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full">
-            {product.department.name}
-          </span>
+          <Link href={route("product.byDepartment", product.department.slug)}>
+            <span className="bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full">
+              {product.department.name}
+            </span>
+          </Link>
           <span className="bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full">
             {product.category.name}
           </span>

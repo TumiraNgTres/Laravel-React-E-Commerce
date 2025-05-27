@@ -61,6 +61,7 @@ export type Product = {
   department: {
     id: number;
     name: string;
+    slug: string;
   };
   category: {
     id: number;
@@ -74,6 +75,21 @@ export type Product = {
     price: number;
   }>;
 };
+
+// -------------------------------------------
+// -------- DEPARTMENTS AND CATEGORIES--------
+export interface Category {
+  id: number;
+  name: string;
+}
+export interface Department {
+  id: number;
+  name: string;
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  categories: Category[];
+}
 
 // -------------------------------------------
 
@@ -157,6 +173,7 @@ export type PaginationProps<T> = {
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
+  appName: string;
   csrf_token: string;
   auth: {
     user: User;
@@ -170,4 +187,5 @@ export type PageProps<
   totalQuantity: number;
   totalPrice: number;
   miniCartItems: cartItems[];
+  departments: Department[];
 };

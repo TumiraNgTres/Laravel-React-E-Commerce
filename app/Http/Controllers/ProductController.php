@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\PaginatedResource;
 use App\Http\Resources\ProductListResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Department;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -61,17 +64,7 @@ class ProductController extends Controller
             ->get();
 
         return Inertia::render('Product/Shop', [
-            // 'products' => ProductListResource::collection($products),
-            'products' => [
-                'data' => ProductListResource::collection($products)->resolve(),
-                'links' => $products->toArray()['links'],
-                'meta' => [
-                    'current_page' => $products->currentPage(),
-                    'last_page' => $products->lastPage(),
-                    'per_page' => $products->perPage(),
-                    'total' => $products->total(),
-                ],
-            ],
+            'products' => PaginatedResource::format($products, ProductListResource::class),
             'filters' => [
                 'categories' => $categories,
             ],
@@ -83,6 +76,30 @@ class ProductController extends Controller
         return Inertia::render('Product/Show', [
             'product' => new ProductResource($product),
             'variationOptions' => request('options', [])
+        ]);
+    }
+
+    public function byDepartment(Request $request, Department $department)
+    {
+        abort_unless($department->active, 404);
+
+        $keyword = $request->query('keyword');
+
+        $products = Product::query()
+            ->forWebsite()
+            ->where('department_id', $department->id)
+            ->when($keyword, function ($query, $keyword) {
+                $query->where(function ($query) use ($keyword) {
+                    $query->where('title', 'LIKE', "%{$keyword}%")
+                        ->orWhere('description', 'LIKE', "%{$keyword}%");
+                });
+            })
+            ->paginate();
+
+        return Inertia::render('Department/Index', [
+            'department' => new DepartmentResource($department),
+            'products' => PaginatedResource::format($products, ProductListResource::class),
+            'keyword' => $keyword,
         ]);
     }
 }

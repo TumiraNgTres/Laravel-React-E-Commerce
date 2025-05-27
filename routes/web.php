@@ -12,10 +12,24 @@ use Illuminate\Support\Facades\Route;
 /* ------ Guest Routes ---------------- */
 
 Route::get('/', [ProductController::class, 'home'])->name('dashboard');
-Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+
+Route::controller(ProductController::class)
+    ->name('product.')
+    ->group(function () {
+
+        Route::prefix('product')->group(function () {
+
+            // product detail page
+            Route::get('{product:slug}', 'show')->name('show');
+        });
+
+        //  product by department
+        Route::get('d/{department:slug}', 'byDepartment')->name('byDepartment');
+    });
 
 Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
 
+// vendor profile
 Route::get('/s/{vendor:store_name}', [VendorController::class, 'profile'])->name('vendor.profile');
 
 // cart routes for guest user ---------------------------------------
@@ -31,11 +45,6 @@ Route::prefix('cart')
 /* ----------------------------------------------------------------------- */
 
 Route::post('stripe/webhook', [StripeController::class, 'webhook'])->name('stripe.webhook');
-
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 /* ----------- Auth Routes -------------------------------------------------------- */
 Route::middleware('auth')->group(function () {
