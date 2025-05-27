@@ -4,6 +4,7 @@ use App\Enum\RolesEnum;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 /* ------ Guest Routes ---------------- */
 
 Route::get('/', [ProductController::class, 'home'])->name('dashboard');
+Route::get('/about', [PublicController::class, 'about'])->name('about');
+Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
 
 Route::controller(ProductController::class)
     ->name('product.')
