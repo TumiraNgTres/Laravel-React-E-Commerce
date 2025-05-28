@@ -14,7 +14,10 @@ export default function MobileSearch() {
 
   const onSubmit: FormEventHandler = (event) => {
     event.preventDefault();
-    searchForm.get(url);
+    searchForm.get(url, {
+      preserveScroll: true,
+      preserveState: true,
+    });
   };
 
   return (
