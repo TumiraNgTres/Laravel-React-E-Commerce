@@ -15,10 +15,13 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
+        $keyword = $request->query('keyword');
+
         $products = Product::query()
             ->forWebsite()
+            ->searchKeyword($keyword)
             ->paginate(12);
 
         return Inertia::render('Home', [
@@ -54,8 +57,12 @@ class ProductController extends Controller
             $query->latest();
         }
 
+        $keyword = $request->query('keyword');
+
         // Paginate products
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->searchKeyword($keyword)
+            ->paginate(12)
+            ->withQueryString();
 
         // Fetch categories with product count
         $categories = Category::select('id', 'name')
@@ -88,18 +95,12 @@ class ProductController extends Controller
         $products = Product::query()
             ->forWebsite()
             ->where('department_id', $department->id)
-            ->when($keyword, function ($query, $keyword) {
-                $query->where(function ($query) use ($keyword) {
-                    $query->where('title', 'LIKE', "%{$keyword}%")
-                        ->orWhere('description', 'LIKE', "%{$keyword}%");
-                });
-            })
+            ->searchKeyword($keyword)
             ->paginate();
 
         return Inertia::render('Department/Index', [
             'department' => new DepartmentResource($department),
             'products' => PaginatedResource::format($products, ProductListResource::class),
-            'keyword' => $keyword,
         ]);
     }
 }

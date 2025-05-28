@@ -5,7 +5,7 @@ import { PageProps } from "@/types";
 
 export default function MobileSearch() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
-  const { keyword } = usePage<PageProps<{ keyword: string }>>().props;
+  const { keyword } = usePage().props;
   const searchForm = useForm<{ keyword: string }>({
     keyword: keyword || "",
   });

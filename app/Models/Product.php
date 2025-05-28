@@ -31,6 +31,7 @@ class Product extends Model implements HasMedia
             ->width(1200);
     }
 
+    // ------------ relationships -------------------------
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
@@ -74,6 +75,8 @@ class Product extends Model implements HasMedia
         );
     }
 
+    // ---------------- Scope --------------------------------------------
+
     public function scopeForVendor(Builder $query): Builder
     {
         return $query->where('created_by', auth()->user()->id);
@@ -95,6 +98,19 @@ class Product extends Model implements HasMedia
             ->join('vendors', 'vendors.user_id', '=', 'products.created_by')
             ->where('vendors.status', VendorStatusEnum::Approved->value);
     }
+
+    public function scopeSearchKeyword(Builder $query, $keyword)
+    {
+        return $query->when($keyword, function ($query, $keyword) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('title', 'LIKE', "%{$keyword}%")
+                    ->orWhere('description', 'LIKE', "%{$keyword}%");
+            });
+        });
+    }
+
+
+    // ------------------------- Other functions --------------------------------
     public function getPriceForOptions($optionIds = [])
     {
         /*

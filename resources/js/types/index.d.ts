@@ -188,4 +188,5 @@ export type PageProps<
   totalPrice: number;
   miniCartItems: cartItems[];
   departments: Department[];
+  keyword: string;
 };

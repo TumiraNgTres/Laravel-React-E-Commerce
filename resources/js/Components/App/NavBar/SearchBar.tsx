@@ -4,7 +4,7 @@ import { usePage, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 
 export default function SearchBar() {
-  const { keyword } = usePage<PageProps<{ keyword: string }>>().props;
+  const { keyword } = usePage().props;
 
   const searchForm = useForm<{ keyword: string }>({
     keyword: keyword || "",
