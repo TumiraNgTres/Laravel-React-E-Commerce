@@ -15,6 +15,7 @@ class OrderViewResource extends JsonResource
     //  */
     public function toArray($request)
     {
+        // order items is order model relationship this is order model related resource
         $orderItems = $this->orderItems;
 
         // Collect all unique variation_type_option_ids from all order items

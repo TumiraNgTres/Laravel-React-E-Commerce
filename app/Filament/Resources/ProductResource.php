@@ -15,7 +15,9 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -95,7 +97,6 @@ class ProductResource extends Resource
                 RichEditor::make('description')
                     ->required()
                     ->toolbarButtons([
-                        
                         'blockquote',
                         'bold',
                         'bulletList',
@@ -123,7 +124,14 @@ class ProductResource extends Resource
                 Select::make('status')
                     ->options(ProductStatusEnum::labels())
                     ->default(ProductStatusEnum::Draft->value)
-                    ->required()
+                    ->required(),
+
+                Section::make('SEO')
+                    ->collapsible()
+                    ->schema([
+                        TextInput::make('meta_title'),
+                        Textarea::make('meta_description')
+                    ])
             ]);
     }
 

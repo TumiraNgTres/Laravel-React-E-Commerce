@@ -2,18 +2,19 @@ import Carousel from "@/Components/Core/Carousel";
 import CurrencyFormatter from "@/Components/Core/CurrencyFormatter";
 import { arraysAreEqual } from "@/helpers";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Product, VariationTypeOption } from "@/types";
+import { PageProps, Product, VariationTypeOption } from "@/types";
 import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { FaCartPlus } from "react-icons/fa6";
 
 function Show({
+  appName,
   product,
   variationOptions,
-}: {
+}: PageProps<{
   product: Product;
   variationOptions: number[];
-}) {
+}>) {
   const form = useForm<{
     option_ids: Record<string, number>;
     quantity: number;
@@ -102,6 +103,9 @@ function Show({
   /* ----------------------------------------------------------------------------- */
 
   /* ------------------------------- useeffect ---------------------------------- */
+
+  // to display he pre-selected options from the url when share the url with selected options--
+
   useEffect(() => {
     // check the variation type and options with the selected options
 
@@ -110,6 +114,7 @@ function Show({
       // if empty it will be null, then pass the first option
 
       const selectedOptionId = variationOptions[type.id];
+
       // variation type id, selected option id is checking with original options, need to display in url or not
       // in use effect first time loading so no need
       chooseOption(
@@ -291,11 +296,25 @@ function Show({
       )
     );
     form.setData("option_ids", idsMap);
+
+    console.log("selected option", selectedOptions);
   }, [selectedOptions]);
 
   return (
     <AuthenticatedLayout>
-      <Head title={product.title} />
+      <Head>
+        <title>{product.title}</title>
+        <meta name="title" content={product.meta_title || product.title} />
+        <meta name="description" content={product.meta_description} />
+        <link rel="canonical" href={route("product.show", product.slug)} />
+
+        <meta property="og:title" content={product.title} />
+        <meta property="og:description" content={product.meta_description} />
+        <meta property="og:image" content={images[0]?.small} />
+        <meta property="og:url" content={route("product.show", product.slug)} />
+        <meta property="og:type" content="product" />
+        <meta property="og:site_name" content={appName} />
+      </Head>
 
       <div className="container mx-auto p-4 md:p-8 min-h-[calc(100vh-150px)]">
         <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">

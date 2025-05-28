@@ -15,15 +15,29 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        //  to avoid product image change glitch when variant image selected when refresh
+        // because from here before send all images like below seperate and in view page they change that using to take options.
+        //  but now based on the selected options, that image will pass - otherwise prdouct image
+        // so product change glitch avoids
+        $options = $request->input('options') ?: [];
+
+        if ($options) {
+            $images = $this->getImagesForOptions($options);
+        } else {
+            $images = $this->getImages();
+        }
+
         return [
             'id'             => $this->id,
             'title'          => $this->title,
             'slug'           => $this->slug,
             'description'    => $this->description,
+            'meta_title'     => $this->meta_title,
+            'meta_description' => $this->meta_description,
             'price'          => number_format($this->price, 2),
             'quantity'       => $this->quantity,
             'image'          => $this->getFirstMediaUrl('images'),
-            'images'         => $this->getMedia('images')->map(function ($image) {
+            'images'         => $images->map(function ($image) {
                 return [
                     'id'    => $image->id,
                     'thumb' => $image->getUrl('thumb'),

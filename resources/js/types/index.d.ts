@@ -53,6 +53,8 @@ export type Product = {
   images: Image[];
   description: string;
   short_description: string;
+  meta_title: string;
+  meta_description: string;
   user: {
     id: number;
     name: string;
