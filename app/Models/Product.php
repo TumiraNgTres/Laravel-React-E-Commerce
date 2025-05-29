@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
@@ -16,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, Searchable;
 
     // make different version of each image uploading
     public function registerMediaConversions(?Media $media = null): void
@@ -233,5 +234,37 @@ class Product extends Model implements HasMedia
             }
         }
         return $this->getMedia('images');
+    }
+
+    // -----------------------------------------------------
+
+    public function searchableAs()
+    {
+        return 'products_index';
+    }
+
+    public function toSearchableArray()
+    {
+        $this->load(['category', 'department', 'user']);
+
+        return [
+            'id' => (string) $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'slug' => $this->slug,
+            'price' => (float) $this->getPriceForFirstOptions(),
+            'quantity' => $this->quantity,
+            'image' => $this->getFirstImageUrl(),
+            'user_id' => (string) $this->user->id,
+            'user_name' => $this->user->name,
+            'user_store_name' => $this->user->vendor->store_name,
+            'department_id' => (string) $this->department->id,
+            'department_name' => $this->department->name,
+            'department_slug' => $this->department->slug,
+            'category_id' => (string) ($this->category ? $this->category->id : ''),
+            'category_name' => $this->category ? $this->category->name : '',
+            'category_slug' => $this->category ? $this->category->slug : '',
+            'created_at' => $this->created_at->timestamp,
+        ];
     }
 }

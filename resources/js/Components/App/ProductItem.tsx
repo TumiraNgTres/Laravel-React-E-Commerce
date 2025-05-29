@@ -95,18 +95,18 @@ function ProductItem({ product }: { product: Product }) {
           <span className="text-lg font-bold text-indigo-600">
             <CurrencyFormatter amount={product.price} />
           </span>
-          {product.price + 20 > product.price && (
+          {/* {product.price + 20 > product.price && (
             <span className="text-xs text-gray-500 line-through">
               <CurrencyFormatter amount={product.price + 20} />
             </span>
-          )}
+          )} */}
         </div>
 
         {/* ✅ Ratings and Review Count */}
-        <div className="flex items-center gap-1 text-yellow-500 text-sm">
+        {/* <div className="flex items-center gap-1 text-yellow-500 text-sm">
           <span>★ 4.5</span>
           <span className="text-gray-400">(120 reviews)</span>
-        </div>
+        </div> */}
 
         {/* ✅ Vendor Link */}
         {product.user.store_name && (
@@ -123,9 +123,9 @@ function ProductItem({ product }: { product: Product }) {
       </div>
 
       {/* ✅ Badge Example */}
-      <div className="absolute top-3 left-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full">
+      {/* <div className="absolute top-3 left-3 bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full">
         Bestseller
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,66 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Multi-Vendor eCommerce Platform (Laravel 12 + React + Inertia.js)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, full-stack **Multi-Vendor eCommerce Website** built using:
 
-## About Laravel
+- **Backend**: Laravel 12 (API-first approach, Filament Admin, Stripe)
+- **Frontend**: React + Inertia.js + TypeScript
+- **Features**: Product variations, cart, checkout, vendor management, role-based access, and more!
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> ⚠️ This project is currently in **Phase 1** and under active development.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ⚙️ Tech Stack
 
-## Learning Laravel
+| Layer       | Technology                               |
+| ----------- | ---------------------------------------- |
+| Backend     | Laravel 12, PHP 8.x                      |
+| Frontend    | React.js, Inertia.js, TypeScript         |
+| Admin Panel | [Filament PHP](https://filamentphp.com/) |
+| Payments    | Stripe                                   |
+| Styling     | Tailwind CSS                             |
+| Auth        | Laravel Breeze                           |
+| Roles & Permissions | Spatie Laravel Permission        |
+| Media Handling       | Spatie Media Library            |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ✅ Features Implemented (Phase 1)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 🔒 User authentication (register/login/logout)
+- 🛍️ Shop page with product listings
+- 📦 Product variations with images
+- 🔄 Guest cart + cart transfer on login
+- 🛒 Add to cart and cart management
+- 💳 Stripe payment integration
+- 👤 User profile page
+- 🛠️ Admin dashboard (using Filament)
+- 🛠️ Vendor dashboard (using Filament)
+- 🏷️ Role-based access (Spatie Permissions)
+- 📁 Product management (admin/vendor)
+- 🖼️ Media uploads with Spatie Media Library
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚧 Upcoming Features (Planned)
 
-### Premium Partners
+- 🧾 **Expanded Admin & Vendor Management Panels**
+- 💸 **Vendor payouts and earnings management**
+- 🌟 **Wishlist functionality**
+- 🏠 **Complete homepage with banners, offers, and featured sections**
+- 🛍️ **Advanced shop filters (variant, brand, etc)**
+- 📊 **Sales analytics for admin and vendors**
+- ⭐ **Product reviews and ratings**
+- 🧰 **Product variation type management from admin**
+- 🔖 **Discount & promotional pricing features**
+- 🎨 **Product UI improvements: badges, availability, and quick views**
+- ⚙️ **Complete dynamic CMS-driven management from admin**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 🛠️ Project Setup
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Backend (Laravel)
 
-## Code of Conduct
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Frontend (React + Inertia)
 
-## Security Vulnerabilities
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Screenshots
 
-## License
+#### 🏠 Home Screens
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+##### 🏠 Home Page
+![Home Page](public/images/screenshots/home-page.png)
+
+##### 🏠 Home Page After Login
+![Home Page After Login](public/images/screenshots/home-page-after-login.png)
+
+
+#### 🛍️ Shop & Product Screens
+
+##### 🛍️ Shop Page
+![Shop Page](public/images/screenshots/shop.png)
+
+##### 📄 Product Detail Page
+![Product Detail](public/images/screenshots/product-detail.png)
+
+##### 🛒 Cart Page
+![Cart Page](public/images/screenshots/cart-page.png)
+
+
+#### 👤 User Panel
+
+##### 👤 User Profile
+![Profile Page](public/images/screenshots/user-profile.png)
+
+
+#### 🛠️ Admin Panel
+
+##### 🗂️ Department List
+![Department List](public/images/screenshots/admin-department-list.png)
+
+##### 📝 Department Edit + Category Management
+![Department Edit](public/images/screenshots/edit-departmentand-category%20list%20page.png)
+
+
+#### 🧑‍💼 Vendor Panel
+
+##### 🧾 Product List
+![Product List](public/images/screenshots/vendor-product-list-page.png)
+
+##### 🖼️ Product Image Upload
+![Product Images](public/images/screenshots/product-images.png)
+
+##### 🔀 Variation Types Management
+![Variation Types](public/images/screenshots/product-variation-types.png)
+
+##### 🔁 Product Variations
+![Product Variations](public/images/screenshots/product-variations.png)
+
+
+
