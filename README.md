@@ -94,7 +94,7 @@ npm run dev
 #### 🛍️ Shop & Product Screens
 
 ##### 🛍️ Shop Page
-![Shop Page](public/images/screenshots/shop.png)
+![Shop Page](public/images/screenshots/shop.png) 
 
 ##### 📄 Product Detail Page
 ![Product Detail](public/images/screenshots/product-detail.png)
