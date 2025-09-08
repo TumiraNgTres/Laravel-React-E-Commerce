@@ -111,7 +111,7 @@ function ProductItem({ product }: { product: Product }) {
         {/* ✅ Vendor Link */}
         {product.user.store_name && (
           <div className="pt-1 text-sm">
-            <span className="text-gray-500">Sold by </span>
+            <span className="text-gray-500">From </span>
             <Link
               href={route("vendor.profile", product.user.store_name)}
               className="text-blue-600 hover:underline"
