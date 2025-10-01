@@ -10,7 +10,7 @@ function CurrencyFormatter({
   amount,
   currency = "USD",
   locale = "en-US",
-}: CurrencyFormatterProps) {
+}: CurrencyFormatterProps): string {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
