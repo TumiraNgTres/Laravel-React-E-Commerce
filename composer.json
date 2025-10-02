@@ -19,6 +19,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.19",
         "laravel/tinker": "^2.10.1",
+        "luigel/laravel-paymongo": "2.x-dev",
         "php-http/curl-client": "^2.3",
         "simonhamp/laravel-stripe-connect": "dev-master",
         "spatie/laravel-permission": "^6.16",
