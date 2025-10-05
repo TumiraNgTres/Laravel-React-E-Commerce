@@ -102,7 +102,7 @@ export default function MobileMenu({
             <li className="flex flex-col space-y-2 border-t border-gray-200 pt-2">
               <Link
                 href={route("login")}
-                className="btn btn-ghost btn-sm rounded-lg hover:bg-orange-700 hover:text-white"
+                className="text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 px-3 py-1.5 rounded-md"
               >
                 Log in
               </Link>

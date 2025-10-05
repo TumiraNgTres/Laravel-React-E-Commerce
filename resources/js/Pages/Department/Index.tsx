@@ -41,7 +41,7 @@ function Index({
       </div>
 
       {products.data.length === 0 && (
-        <div className="py-16 px-8 text-center text-gray-300 text-3xl">
+        <div className="py-16 px-8 text-center text-black-300 text-3xl">
           No products found
         </div>
       )}
